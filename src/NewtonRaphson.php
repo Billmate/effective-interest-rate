@@ -1,7 +1,4 @@
 <?php
-
-declare(strict_types=1);
-
 namespace Nyholm\EffectiveInterest;
 
 /**
@@ -21,7 +18,7 @@ final class NewtonRaphson
     /**
      * @param int $precision The number of decimals to care to calculate
      */
-    public function __construct(int $precision = 7)
+    public function __construct($precision = 7)
     {
         $this->precision = $precision;
     }
@@ -33,7 +30,7 @@ final class NewtonRaphson
      *
      * @return float
      */
-    public function run(callable $fx, callable $fdx, float $guess): float
+    public function run($fx, $fdx, $guess)
     {
         $errorLimit = pow(10, -1 * $this->precision);
         do {

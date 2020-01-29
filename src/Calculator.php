@@ -1,7 +1,4 @@
 <?php
-
-declare(strict_types=1);
-
 namespace Nyholm\EffectiveInterest;
 
 /**
@@ -19,7 +16,7 @@ final class Calculator
      */
     public function __construct(NewtonRaphson $newton = null)
     {
-        $this->newton = $newton ?? new NewtonRaphson();
+        $this->newton = ($newton !== null) ? $newtion : new NewtonRaphson();
     }
 
     /**
@@ -33,7 +30,7 @@ final class Calculator
      *
      * @return float
      */
-    public function withSpecifiedPayments(int $principal, string $startDate, array $payments, float $guess): float
+    public function withSpecifiedPayments($principal, $startDate, $payments, $guess)
     {
         list($values, $days) = $this->preparePayments($principal, $startDate, $payments);
 
@@ -68,7 +65,7 @@ final class Calculator
      *
      * @return float
      */
-    public function withEqualPayments(int $principal, int $payment, int $numberOfMonths, float $guess): float
+    public function withEqualPayments($principal, $payment, $numberOfMonths, $guess)
     {
         $fx = function ($x) use ($principal, $payment, $numberOfMonths) {
             return  $payment - $payment * pow(1 + $x, -1 * $numberOfMonths) - $x * $principal;
@@ -90,10 +87,10 @@ final class Calculator
      *
      * @return array
      */
-    private function preparePayments(int $principal, string $startDate, array $payments): array
+    private function preparePayments($principal, $startDate, $payments)
     {
-        $values = [-1 * $principal];
-        $days = [1];
+        $values = array(-1 * $principal);
+        $days = array(1);
         $startDate = new \DateTimeImmutable($startDate);
 
         foreach ($payments as $date => $payment) {
@@ -101,6 +98,6 @@ final class Calculator
             $days[] = 1 + $startDate->diff(new \DateTime($date))->days;
         }
 
-        return [$values, $days];
+        return array($values, $days);
     }
 }
